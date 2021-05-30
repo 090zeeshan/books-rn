@@ -1,3 +1,4 @@
+import { PRIMARY_COLOR } from './../../globals/Colors';
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
@@ -7,6 +8,9 @@ export default StyleSheet.create({
         borderRadius: 8,
         flexDirection: 'row',
         alignItems: 'center',
+    },
+    containerFocused: {
+        borderColor: PRIMARY_COLOR
     },
     input: {
         flex: 1,

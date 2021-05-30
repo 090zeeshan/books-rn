@@ -13,13 +13,15 @@ import React from 'react';
 import Navigation from './app/navigation/Navigation';
 import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
-import Home from './app/screens/home/Home';
+import { BooksContextProvider } from './app/data/context/books/BooksContext';
 
 const App = () => {
 
   return (
     <NavigationContainer>
-      <Navigation />
+      <BooksContextProvider>
+        <Navigation />
+      </BooksContextProvider>
     </NavigationContainer>
   );
 };
