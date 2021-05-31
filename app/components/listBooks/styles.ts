@@ -14,7 +14,7 @@ export default StyleSheet.create({
     bookThumbnail: {
         padding: 4,
         width: 100,
-        height: 100,
+        height: 130,
     },
     bookTitle: {
         fontWeight: 'bold',
@@ -35,5 +35,9 @@ export default StyleSheet.create({
     },
     infoValue:{
         marginLeft: 4,
+    },
+    listIconsView: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
     }
 });

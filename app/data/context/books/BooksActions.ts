@@ -28,3 +28,17 @@ export const resetError = () => {
         type: BooksActionType.RESET_ERROR
     } as BooksAction
 }
+
+export const toggleFavourite = (id: string) => {
+    return {
+        type: BooksActionType.TOGGLE_FAVOURITE,
+        payload: id
+    } as BooksAction
+}
+
+export const toggleTBR = (id: string) => {
+    return {
+        type: BooksActionType.TOGGLE_TBR,
+        payload: id
+    } as BooksAction
+}

@@ -49,6 +49,26 @@ export default (state = initialState, action: BooksAction) => {
                 error: null
             } as BooksState
         }
+        case BooksActionType.TOGGLE_FAVOURITE: {
+            const book = state.books.find(item => item.id == action.payload as string);
+            if (book) {
+                book.isFavourite = !!!book.isFavourite;
+            }
+            return {
+                ...state,
+                books: [...state.books],
+            } as BooksState;
+        }
+        case BooksActionType.TOGGLE_TBR: {
+            const book = state.books.find(item => item.id == action.payload as string);
+            if (book) {
+                book.isTBR = !!!book.isTBR;
+            }
+            return {
+                ...state,
+                books: [...state.books],
+            } as BooksState;
+        }
         default: {
             return state;
         }

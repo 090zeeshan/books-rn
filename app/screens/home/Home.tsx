@@ -1,5 +1,6 @@
 import React, { useState, useContext, Dispatch } from 'react';
 import { Text, View, TextInput } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import styles from './styles';
 import globalStyles from '../../globals/styles';
 import SearchInput from '../../components/searchInput/SearchInput';
@@ -14,8 +15,11 @@ import { resetError, searchBooks } from '../../data/context/books/BooksActions';
 import snackbarUtil from '../../components/snackbarutil/SnackbarUtil';
 import ListBooks from '../../components/listBooks/ListBooks';
 import Volume from '../../data/model/Volume';
+import ScreenNames from '../../navigation/ScreenNames';
+import BookDetailsParams from '../bookDetails/BookDetailsParams';
 
 const Home: React.FC<{}> = () => {
+    const navigation = useNavigation();
     const [state, dispatch] = useContext(BooksContext) as [BooksState, any];
     const [searchQuery, setSearchQuery] = useState("");
 
@@ -35,7 +39,7 @@ const Home: React.FC<{}> = () => {
     }
 
     const onBookPressed = (book: Volume) => {
-
+        navigation.navigate(ScreenNames.DETAILS, { book } as BookDetailsParams);
     }
 
     if (!!state.error) {

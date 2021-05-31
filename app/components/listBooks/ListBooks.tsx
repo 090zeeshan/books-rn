@@ -1,6 +1,7 @@
 import React from 'react';
 import { FlatList, View, Image, Text, TouchableOpacity } from 'react-native';
-import Volume from '../../data/model/Volume';
+import Icon from 'react-native-vector-icons/Ionicons';
+import Volume, { getAuthorsText } from '../../data/model/Volume';
 import styles from './styles';
 
 
@@ -12,18 +13,6 @@ interface IBookViewProps {
 const BookView = (props: IBookViewProps) => {
     const book = props.book;
 
-    const getAuthorsName = () => {
-        if (!!!book.volumeInfo.authors) {
-            return "";
-        }
-        return book.volumeInfo.authors.map((item, index) => {
-            if (index < book.volumeInfo.authors.length - 1) {
-                return item + ", ";
-            }
-            return item;
-        })
-    }
-
     const onItemPressed = () => {
         props.onItemPressed(book);
     }
@@ -31,18 +20,23 @@ const BookView = (props: IBookViewProps) => {
     return (
         <TouchableOpacity onPress={onItemPressed}>
             <View style={styles.bookView}>
-                <Image style={styles.bookThumbnail} source={{ uri: book.volumeInfo.imageLinks.smallThumbnail }} />
+                <Image style={styles.bookThumbnail} source={{ uri: book.volumeInfo.imageLinks.smallThumbnail || book.volumeInfo.imageLinks.smallThumbnail || "" }} />
                 <View style={styles.bookInfoView}>
                     <Text style={styles.bookTitle}>{book.volumeInfo.title}</Text>
                     <Text style={styles.bookSubTitle}>{book.volumeInfo.subtitle}</Text>
                     <View style={styles.infoView}>
                         <Text style={styles.infoLabel}>Authors:</Text>
-                        <Text style={styles.infoValue}>{getAuthorsName()}</Text>
+                        <Text style={styles.infoValue}>{getAuthorsText(book)}</Text>
                     </View>
                     <View style={styles.infoView}>
                         <Text style={styles.infoLabel}>Published Date:</Text>
                         <Text style={styles.infoValue}>{book.volumeInfo.publishedDate}</Text>
                     </View>
+                    <View style={styles.listIconsView}>
+                        <Icon color="red" size={24} name={book.isFavourite? 'heart': 'heart-outline'} />
+                        <Icon color="green" size={24} name={book.isTBR? 'book': 'book-outline'} />
+                    </View>
+
                 </View>
             </View>
         </TouchableOpacity>
