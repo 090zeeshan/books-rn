@@ -1,6 +1,7 @@
 enum ScreenNames {
     HOME = "Home",
-    DETAILS = "Details"
+    DETAILS = "Details",
+    WEBVIEW = "Webview",
 };
 
 export default ScreenNames;

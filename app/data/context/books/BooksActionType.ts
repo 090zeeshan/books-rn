@@ -5,6 +5,7 @@ enum BooksActionType {
     RESET_ERROR,
     TOGGLE_FAVOURITE,
     TOGGLE_TBR,
+    LOAD_MORE_STARTED,
 }
 
 export default BooksActionType;

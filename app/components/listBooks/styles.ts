@@ -1,3 +1,4 @@
+import { PRIMARY_COLOR } from './../../globals/Colors';
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
@@ -7,6 +8,13 @@ export default StyleSheet.create({
     },
     bookView: {
         marginVertical: 8,
+        padding:8,  
+        elevation: 5,
+        shadowColor:'black',
+        backgroundColor: 'ghostwhite',
+        borderColor: PRIMARY_COLOR,
+        borderRadius: 10,
+        borderWidth: 2,
         flex: 1,
         flexDirection: "row",
 
@@ -33,11 +41,24 @@ export default StyleSheet.create({
     infoLabel: {
         fontWeight: 'bold',
     },
-    infoValue:{
+    infoValue: {
         marginLeft: 4,
     },
     listIconsView: {
         flexDirection: 'row',
         justifyContent: 'space-around',
+    },
+    emptyListContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    listContentContainer: { 
+        flexGrow: 1 ,
+    },
+    emptyListNote: {
+        fontSize: 26,
+        fontWeight: 'bold',
+        color: 'gray',
     }
 });

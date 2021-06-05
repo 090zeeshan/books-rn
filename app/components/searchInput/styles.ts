@@ -4,13 +4,17 @@ import { StyleSheet } from "react-native";
 export default StyleSheet.create({
     container: {
         borderWidth: 2,
-        borderColor: 'gray',
+        backgroundColor: 'ghostwhite',
         borderRadius: 8,
         flexDirection: 'row',
         alignItems: 'center',
     },
     containerFocused: {
-        borderColor: PRIMARY_COLOR
+        borderColor: PRIMARY_COLOR,
+        shadowColor: 'black',
+        elevation: 5,
+        backgroundColor: 'ghostwhite',
+
     },
     input: {
         flex: 1,

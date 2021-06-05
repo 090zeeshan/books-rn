@@ -62,5 +62,8 @@ export default StyleSheet.create({
     },
     listButtonIcon: {
 
+    },
+    container: {
+        backgroundColor: 'ghostwhite',
     }
 });

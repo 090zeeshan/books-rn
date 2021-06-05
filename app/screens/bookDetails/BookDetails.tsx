@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Text, View, Image, Button, Linking, TouchableOpacity } from 'react-native';
 import { NavigationProp, Route, useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -6,12 +6,13 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import BookDetailsParams from './BookDetailsParams';
 import styles from '../bookDetails/styles';
 import globalStyles from '../../globals/styles';
-import Volume, { getAuthorsText, getCategoriesText } from '../../data/model/Volume';
+import Volume, { getAuthorsText, getCategoriesText, getThumbnailSrc } from '../../data/model/Volume';
 import { ScrollView } from 'react-native-gesture-handler';
 import { BooksContext } from '../../data/context/books/BooksContext';
 import BooksState from '../../data/context/books/BooksState';
 import { DetailedVolumeInfo } from '../../data/model/Volume';
 import { toggleFavourite, toggleTBR } from '../../data/context/books/BooksActions';
+import ScreenNames from '../../navigation/ScreenNames';
 
 const bookDetails: React.FC<{ route: Route<string, BookDetailsParams> }> = ({ route }) => {
     const navigation = useNavigation();
@@ -19,8 +20,15 @@ const bookDetails: React.FC<{ route: Route<string, BookDetailsParams> }> = ({ ro
     const book = state.books.find(item => item.id == route.params.book.id) as Volume;
     const volumeDetails = book.volumeInfo as DetailedVolumeInfo;
 
+    useEffect(() => {
+        navigation.setOptions({ headerTitle: volumeDetails.title });
+    }, []);
+
     const onPreviewPressed = () => {
-        Linking.openURL(volumeDetails.previewLink);
+        navigation.navigate(ScreenNames.WEBVIEW, {
+            url: volumeDetails.previewLink,
+            title: "Preview of " + volumeDetails.title,
+        })
     }
 
     const onFavouritePressed = () => {
@@ -60,14 +68,14 @@ const bookDetails: React.FC<{ route: Route<string, BookDetailsParams> }> = ({ ro
     );
 
     return (
-        <View style={globalStyles.container}>
+        <View style={[globalStyles.container, styles.container]}>
             <View style={styles.titleView}>
                 <Text style={styles.title}>{volumeDetails.title}</Text>
                 <Text style={styles.subtitle}>{volumeDetails.subtitle}</Text>
             </View>
 
             <View style={styles.topInfoView}>
-                <Image style={styles.thumbnail} source={{ uri: volumeDetails.imageLinks.thumbnail }} />
+                <Image style={styles.thumbnail} source={getThumbnailSrc(book)} />
                 <View style={styles.topSubInfoView}>
                     {renderInfoRow("Authors", getAuthorsText(book))}
                     {renderInfoRow("Publisher", volumeDetails.publisher)}

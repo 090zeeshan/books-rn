@@ -13,9 +13,9 @@ axios.interceptors.request.use(config => {
     return config;
 });
 
-export const search: (query: string) => Promise<QueryResponse<Volume>> = (query: string) => {
+export const search: (query: string, startIndex?: number) => Promise<QueryResponse<Volume>> = (query: string, startIndex: number = 0) => {
     return new Promise((resolve, reject) => {
-        axios.get(END_POINT_VOLUMES, { params: { q: query } })
+        axios.get(END_POINT_VOLUMES, { params: { q: query, startIndex } })
             .then((response: AxiosResponse<QueryResponse<Volume>>) => {
                 resolve(response.data);
             })

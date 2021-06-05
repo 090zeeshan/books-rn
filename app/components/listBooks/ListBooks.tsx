@@ -1,9 +1,9 @@
 import React from 'react';
 import { FlatList, View, Image, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import Volume, { getAuthorsText } from '../../data/model/Volume';
+import Volume, { getAuthorsText, getThumbnailSrc } from '../../data/model/Volume';
+import ProgressIndicator from '../progressIndicator/ProgressIndicator';
 import styles from './styles';
-
 
 interface IBookViewProps {
     book: Volume;
@@ -20,7 +20,7 @@ const BookView = (props: IBookViewProps) => {
     return (
         <TouchableOpacity onPress={onItemPressed}>
             <View style={styles.bookView}>
-                <Image style={styles.bookThumbnail} source={{ uri: book.volumeInfo.imageLinks.smallThumbnail || book.volumeInfo.imageLinks.smallThumbnail || "" }} />
+                <Image style={styles.bookThumbnail} source={getThumbnailSrc(book)} />
                 <View style={styles.bookInfoView}>
                     <Text style={styles.bookTitle}>{book.volumeInfo.title}</Text>
                     <Text style={styles.bookSubTitle}>{book.volumeInfo.subtitle}</Text>
@@ -33,8 +33,8 @@ const BookView = (props: IBookViewProps) => {
                         <Text style={styles.infoValue}>{book.volumeInfo.publishedDate}</Text>
                     </View>
                     <View style={styles.listIconsView}>
-                        <Icon color="red" size={24} name={book.isFavourite? 'heart': 'heart-outline'} />
-                        <Icon color="green" size={24} name={book.isTBR? 'book': 'book-outline'} />
+                        <Icon color="red" size={24} name={book.isFavourite ? 'heart' : 'heart-outline'} />
+                        <Icon color="green" size={24} name={book.isTBR ? 'book' : 'book-outline'} />
                     </View>
 
                 </View>
@@ -47,17 +47,31 @@ interface IListBooksProps {
     books: Volume[];
     onEndReached: (distance: number) => void;
     onBookPressed: (book: Volume) => void;
+    isLoadingMore: boolean;
 }
 
 export default (props: IListBooksProps) => {
+
+    const renderEmptyList = () => {
+        return(
+            <View style={styles.emptyListContainer}>
+                <Text style={styles.emptyListNote}>Start searching books...</Text>
+            </View>
+        );
+    }
+
     return (
         <View style={styles.booksList}>
             <FlatList
+                contentContainerStyle={styles.listContentContainer}
                 onEndReached={(info) => props.onEndReached(info.distanceFromEnd)}
-                onEndReachedThreshold={0.5}
+                onEndReachedThreshold={1}
                 renderItem={(itme) => <BookView book={itme.item} onItemPressed={props.onBookPressed} />}
+                ListEmptyComponent={renderEmptyList}
+                ListFooterComponent={() => props.isLoadingMore ? <ProgressIndicator /> : null}
                 keyExtractor={(book) => book.id}
                 data={props.books}
+
             />
         </View>
     );

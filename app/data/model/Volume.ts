@@ -1,4 +1,3 @@
-import { DetailedVolumeInfo } from './Volume';
 interface Volume {
     id: string;
     kind: string;
@@ -69,4 +68,9 @@ export const getCategoriesText: (book: Volume) => string = (book: Volume) => {
     });
 
     return text == "" ? "N/A" : text;
+}
+
+export const getThumbnailSrc = (book: Volume) => {
+    const thumbnailUrl = book.volumeInfo?.imageLinks?.smallThumbnail || book.volumeInfo?.imageLinks?.thumbnail;
+    return thumbnailUrl ? { uri: thumbnailUrl } : require('../../assets/img/book_placeholder.png');
 }
